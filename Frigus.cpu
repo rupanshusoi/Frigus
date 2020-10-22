@@ -107,11 +107,11 @@
 	<PunctChar char=";" use="comment" />
 
 	<!--......... machine instruction fields ............-->
-	<Field name="addr" type="required" numBits="8" relativity="absolute" signed="false" defaultValue="0" id="model.Field31c86477">
+	<Field name="addr" type="required" numBits="8" relativity="absolute" signed="false" defaultValue="0" id="model.Field6f2fb0aa">
 	</Field>
-	<Field name="unused" type="required" numBits="4" relativity="absolute" signed="false" defaultValue="0" id="model.Field5d753a88">
+	<Field name="unused" type="required" numBits="4" relativity="absolute" signed="false" defaultValue="0" id="model.Field3c78d2ef">
 	</Field>
-	<Field name="opcode" type="required" numBits="4" relativity="absolute" signed="false" defaultValue="0" id="model.Field5574c32e">
+	<Field name="opcode" type="required" numBits="4" relativity="absolute" signed="false" defaultValue="0" id="model.Field55e877cf">
 	</Field>
 
 	<!--............. FileChannels .................-->
@@ -140,10 +140,12 @@
 	<!-- none -->
 
 	<!--............. test ..........................-->
-	<Test name="eq-ACC" register="model.module.Register68626e16" start="0" numBits="16" comparison="EQ" value="0" omission="0" id="model.microinstruction.Test47562de0" />
-	<Test name="neg-ACC" register="model.module.Register68626e16" start="0" numBits="16" comparison="LT" value="0" omission="0" id="model.microinstruction.Test5bc7e2b7" />
-	<Test name="neq-ACC" register="model.module.Register68626e16" start="0" numBits="16" comparison="NE" value="0" omission="0" id="model.microinstruction.Test57eedb04" />
-	<Test name="pos-ACC" register="model.module.Register68626e16" start="0" numBits="16" comparison="GT" value="0" omission="0" id="model.microinstruction.Testeef8c2" />
+	<Test name="eq-ACC" register="model.module.Register68626e16" start="0" numBits="16" comparison="EQ" value="0" omission="1" id="model.microinstruction.Test47562de0" />
+	<Test name="ge-ACC" register="model.module.Register68626e16" start="0" numBits="16" comparison="GE" value="0" omission="1" id="model.microinstruction.Test2f34d328" />
+	<Test name="gt-ACC" register="model.module.Register68626e16" start="0" numBits="16" comparison="GT" value="0" omission="1" id="model.microinstruction.Testeef8c2" />
+	<Test name="le-ACC" register="model.module.Register68626e16" start="0" numBits="16" comparison="LE" value="0" omission="1" id="model.microinstruction.Test2bc166cd" />
+	<Test name="lt-ACC" register="model.module.Register68626e16" start="0" numBits="16" comparison="LT" value="0" omission="1" id="model.microinstruction.Test5bc7e2b7" />
+	<Test name="neq-ACC" register="model.module.Register68626e16" start="0" numBits="16" comparison="NE" value="0" omission="1" id="model.microinstruction.Test57eedb04" />
 
 	<!--............. increment .....................-->
 	<Increment name="inc-PC" register="model.module.Register326024c4" overflowBit="model.module.ConditionBit14764bbd" carryBit="model.module.ConditionBit41502ca" delta="1" id="model.microinstruction.Increment775e6061" />
@@ -208,7 +210,62 @@
 	</FetchSequence>
 
 	<!--............. machine instructions ..........-->
-	<!-- none -->
+
+	<MachineInstruction name="jmpn" opcode="8" instructionFormat="opcode unused addr" assemblyFormat="opcode unused addr" instructionColors="#82c0a4 #a5a8b2 #85ddf8" assemblyColors="#82c0a4 #a5a8b2 #85ddf8" >
+		<Microinstruction microRef="model.microinstruction.Test2f34d328" />
+		<Microinstruction microRef="model.microinstruction.TransferRtoR157482c0" />
+		<Microinstruction microRef="model.microinstruction.End7c4c9a08" />
+	</MachineInstruction>
+
+	<MachineInstruction name="jmpp" opcode="7" instructionFormat="opcode unused addr" assemblyFormat="opcode unused addr" instructionColors="#baf492 #9784c4 #b083fe" assemblyColors="#baf492 #9784c4 #b083fe" >
+		<Microinstruction microRef="model.microinstruction.Test2bc166cd" />
+		<Microinstruction microRef="model.microinstruction.TransferRtoR157482c0" />
+		<Microinstruction microRef="model.microinstruction.End7c4c9a08" />
+	</MachineInstruction>
+
+	<MachineInstruction name="jmpnz" opcode="6" instructionFormat="opcode unused addr" assemblyFormat="opcode unused addr" instructionColors="#86da8c #a89480 #b495b7" assemblyColors="#86da8c #a89480 #b495b7" >
+		<Microinstruction microRef="model.microinstruction.Test47562de0" />
+		<Microinstruction microRef="model.microinstruction.TransferRtoR157482c0" />
+		<Microinstruction microRef="model.microinstruction.End7c4c9a08" />
+	</MachineInstruction>
+
+	<MachineInstruction name="jmpz" opcode="5" instructionFormat="opcode unused addr" assemblyFormat="opcode unused addr" instructionColors="#a8cb95 #ee89e3 #92b4f6" assemblyColors="#a8cb95 #ee89e3 #92b4f6" >
+		<Microinstruction microRef="model.microinstruction.Test57eedb04" />
+		<Microinstruction microRef="model.microinstruction.TransferRtoR157482c0" />
+		<Microinstruction microRef="model.microinstruction.End7c4c9a08" />
+	</MachineInstruction>
+
+	<MachineInstruction name="sta" opcode="4" instructionFormat="opcode unused addr" assemblyFormat="opcode unused addr" instructionColors="#a9b18b #e79ff1 #d1adfa" assemblyColors="#a9b18b #e79ff1 #d1adfa" >
+		<Microinstruction microRef="model.microinstruction.TransferRtoRc343f16" />
+		<Microinstruction microRef="model.microinstruction.TransferRtoR2697505b" />
+		<Microinstruction microRef="model.microinstruction.MemoryAccess55229cf7" />
+		<Microinstruction microRef="model.microinstruction.End7c4c9a08" />
+	</MachineInstruction>
+
+	<MachineInstruction name="lda" opcode="3" instructionFormat="opcode unused addr" assemblyFormat="opcode unused addr" instructionColors="#bf9fe6 #b599b2 #bf86f7" assemblyColors="#bf9fe6 #b599b2 #bf86f7" >
+		<Microinstruction microRef="model.microinstruction.TransferRtoRc343f16" />
+		<Microinstruction microRef="model.microinstruction.MemoryAccess12077fbd" />
+		<Microinstruction microRef="model.microinstruction.TransferRtoR58eea6c2" />
+		<Microinstruction microRef="model.microinstruction.End7c4c9a08" />
+	</MachineInstruction>
+
+	<MachineInstruction name="sub" opcode="2" instructionFormat="opcode unused addr" assemblyFormat="opcode unused addr" instructionColors="#b79887 #98afb4 #dfbde9" assemblyColors="#b79887 #98afb4 #dfbde9" >
+		<Microinstruction microRef="model.microinstruction.TransferRtoRc343f16" />
+		<Microinstruction microRef="model.microinstruction.MemoryAccess12077fbd" />
+		<Microinstruction microRef="model.microinstruction.Arithmetic78709d30" />
+		<Microinstruction microRef="model.microinstruction.End7c4c9a08" />
+	</MachineInstruction>
+
+	<MachineInstruction name="add" opcode="1" instructionFormat="opcode unused addr" assemblyFormat="opcode unused addr" instructionColors="#c296fc #a780d0 #ccfe86" assemblyColors="#c296fc #a780d0 #ccfe86" >
+		<Microinstruction microRef="model.microinstruction.TransferRtoRc343f16" />
+		<Microinstruction microRef="model.microinstruction.MemoryAccess12077fbd" />
+		<Microinstruction microRef="model.microinstruction.Arithmetic761c39d2" />
+		<Microinstruction microRef="model.microinstruction.End7c4c9a08" />
+	</MachineInstruction>
+
+	<MachineInstruction name="nop" opcode="0" instructionFormat="opcode unused unused unused" assemblyFormat="opcode unused unused unused" instructionColors="#b8b8d6 #e0cf92 #dee3b5 #9cc2dc" assemblyColors="#b8b8d6 #e0cf92 #dee3b5 #9cc2dc" >
+		<Microinstruction microRef="model.microinstruction.End7c4c9a08" />
+	</MachineInstruction>
 
 	<!--............. highlighting info .............-->
 	<HighlightingInfo>
