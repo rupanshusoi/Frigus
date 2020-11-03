@@ -1,0 +1,63 @@
+loop:
+input
+
+; Exit input loop if zero
+jmpz end
+
+jmpn loop
+
+; Store to main memory
+a2m head
+
+; Increment head
+lda head
+add one
+sta head
+
+; Increment count
+lda count
+add one
+sta count
+
+; Input loop
+jmp loop
+
+end:
+; Decrement count once
+lda count
+sub one
+sta count
+
+lda count
+jmpz final
+
+; Decrement head once so that it points to the topmost element
+lda head
+sub one
+sta head
+
+; Output loop
+final:
+jmpz error
+
+m2a head
+output
+
+; Decrement head
+lda head
+sub one
+sta head
+
+; Decrement count
+lda count
+sub one
+sta count
+
+jmpnz final
+
+error:
+stop
+
+head: .data 1 200
+count: .data 1 1
+one: .data 1 1
