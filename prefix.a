@@ -1,0 +1,63 @@
+loop:
+ipa 0
+
+; Exit input loop if zero
+jmpz end 0
+
+; Don't save to memory if negative input
+jmpn loop 0
+
+; Store to main memory
+a2m head 0
+
+; Increment head
+lda head 1
+lda one 0
+add 1 0
+sta head 0
+
+; Increment count
+lda count 1
+lda one 0
+add 1 0
+sta count 0
+
+; Input loop
+jmp loop
+
+end:
+lda count 0
+jmpz final 0
+
+; Output input_loop
+final:
+lda count 0
+jmpz error 0
+
+; sum r7
+m2a head_cpy 0
+add 0 7
+opa 7
+
+; Increment head
+lda head_cpy 0
+lda one 1
+add 1 0
+sta head_cpy 0
+
+; Decrement count
+lda count 0
+lda one 1
+sub 1 0
+sta count 0
+
+lda count 0
+jmpnz final 0
+
+error:
+stop
+
+head: .data 1 200
+head_cpy: .data 1 200
+count: .data 1 0
+one: .data 1 1
