@@ -1,0 +1,70 @@
+;Assignment - 1
+;Rupanshu Soi (2018A7PS0294H) - f20180294@hyderabad.bits-pilani.ac.in
+;Pranay Tarigopula (2018A7PS0237H) - f20180237@hyderabad.bits-pilani.ac.in
+;Dhruv Adlakha (2018A7PS0303H) - f20180303@hyderabad.bits-pilani.ac.in
+;Abhinav Bandaru (2018A7PS0236H) - f20180236@hyderabad.bits-pilani.ac.in
+;Harshit Gakhar (2018A7PS0182H) - f20180182@hyderabad.bits-pilani.ac.in
+
+loop:
+ipa R1
+
+; Exit input loop if zero
+jmpz end R1
+
+; Don't save to memory if negative input
+jmpn loop R1
+
+; Store to main memory
+m2m head R1
+
+; Increment head
+lda head R2
+lda one R1
+add R2 R1
+sta head R1
+
+; Increment count
+lda count R2
+lda one R1
+add R2 R1
+sta count R1
+
+; Input loop
+jmp loop
+
+end:
+lda count R1
+jmpz final R1
+
+; Output loop
+final:
+lda count R1
+jmpz error R1
+
+; sum r7
+m2a head_cpy R1
+add R1 R8
+opa R8
+
+; Increment head
+lda head_cpy R1
+lda one R2
+add R2 R1
+sta head_cpy R1
+
+; Decrement count
+lda count R1
+lda one R2
+sub R2 R1
+sta count R1
+
+lda count R1
+jmpnz final R1
+
+error:
+stop
+
+head: .data 1 200
+head_cpy: .data 1 200
+count: .data 1 0
+one: .data 1 1
